@@ -5,8 +5,13 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY backend/ .
+COPY backend/ ./backend
 # Copy .env if needed, though usually injected via compose/k8s
 # COPY .env . 
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Run from root so 'backend' module is found if needed, or adjust WORKDIR. 
+# Current layout: /app/backend exists. /app/requirements.txt exists.
+# Main is in backend/main.py.
+# If we run from /app, we need uvicorn backend.main:app
+ENV PYTHONPATH=/app
+CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]

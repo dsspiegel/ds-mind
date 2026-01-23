@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { apiFetch } from '../lib/api';
 
 interface Mind {
@@ -42,8 +42,13 @@ export function MindProvider({ children }: { children: ReactNode }) {
     const [pendingClaims, setPendingClaims] = useState<Claim[]>([]);
     const [insertCodeCallback, setInsertCodeCallbackState] = useState<(code: string) => void>(() => () => { });
 
-    const insertCode = (code: string) => insertCodeCallback(code);
-    const setInsertCodeCallback = (fn: (code: string) => void) => setInsertCodeCallbackState(() => fn);
+    const insertCode = useCallback((code: string) => {
+        insertCodeCallback(code);
+    }, [insertCodeCallback]);
+
+    const setInsertCodeCallback = useCallback((fn: (code: string) => void) => {
+        setInsertCodeCallbackState(() => fn);
+    }, []);
 
     // Determine current mind object
     const currentMind = minds.find(m => m.id === mindId) || minds[0] || null;

@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+python-multipart
+python-dotenv
+google-genai
+google-cloud-bigquery
+google-cloud-firestore
+pandas
+numpy
+requests
+pydantic

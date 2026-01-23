@@ -44,6 +44,8 @@ flowchart LR
     SQL -.->|save claim| Firestore
     Mind -.->|fetch| Firestore
     Gemini -->|answer| Chat
+    Chat -.->|insert code| Colab
+    Chat -.->|insert query| Plx
 `;
 
 export default function AboutPage() {

@@ -520,19 +520,28 @@ export default function ChatSidebar({ context }: ChatSidebarProps) {
                                 <>
                                     <Markdown
                                         components={{
-                                            pre: ({ node, children, ...props }) => {
-                                                // Extract code from the pre block for the insert button
+                                            pre: ({ node, ...props }) => <pre {...props} />,
+                                            code: ({ node, className, children, ...props }) => {
+                                                const match = /language-(\w+)/.exec(className || '')
+                                                const isInline = !match && !String(children).includes('\n');
                                                 const codeContent = String(children).replace(/\n$/, '');
+
+                                                if (isInline) {
+                                                    return <code className={className} {...props}>{children}</code>
+                                                }
+
                                                 return (
                                                     <div style={{ position: 'relative' }}>
-                                                        <pre {...props}>{children}</pre>
-                                                        {context === 'colab' && codeContent.length > 10 && (
+                                                        <code className={className} {...props}>
+                                                            {children}
+                                                        </code>
+                                                        {context === 'colab' && (
                                                             <button
                                                                 onClick={() => insertCode(codeContent)}
                                                                 style={{
                                                                     position: 'absolute',
-                                                                    top: '4px',
-                                                                    right: '4px',
+                                                                    top: '-20px',
+                                                                    right: '0px',
                                                                     padding: '4px 8px',
                                                                     fontSize: '11px',
                                                                     background: '#4b9fff',
@@ -542,7 +551,8 @@ export default function ChatSidebar({ context }: ChatSidebarProps) {
                                                                     cursor: 'pointer',
                                                                     display: 'flex',
                                                                     alignItems: 'center',
-                                                                    gap: '4px'
+                                                                    gap: '4px',
+                                                                    zIndex: 10
                                                                 }}
                                                                 title="Insert into notebook"
                                                             >
@@ -550,9 +560,8 @@ export default function ChatSidebar({ context }: ChatSidebarProps) {
                                                             </button>
                                                         )}
                                                     </div>
-                                                );
-                                            },
-                                            code: ({ node, ...props }) => <code {...props} />
+                                                )
+                                            }
                                         }}
                                     >
                                         {m.content}

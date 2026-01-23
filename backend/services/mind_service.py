@@ -67,16 +67,18 @@ def chat(request):
     
     try:
         client = genai.Client(api_key=GOOGLE_API_KEY)
-        prompt = f"""Answer using ONLY this knowledge. Be specific and cite sources.
+        prompt = f"""Answer the question primarily using your general knowledge (especially for coding, standard libraries, and general reasoning).
+        
+However, use the following KNOWLEDGE from the user's specific project/notebook analysis as context if it is relevant. Do not force the context into the answer if it doesn't fit the question.
 
 {context_instruction}
 
-KNOWLEDGE:
+KNOWLEDGE (Use only if relevant to the question):
 {claims_text}
 
 QUESTION: {request.question}
 
-Reference specific analysis (e.g., "Based on the notebook analysis...") and cite numbers."""
+If you use the knowledge, specificy which piece. If the question is generic (like "write an FFT function"), just answer it normally without forcing project context."""
         
         response = client.models.generate_content(
             model=request.model,

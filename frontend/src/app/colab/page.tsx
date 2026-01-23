@@ -13,7 +13,7 @@ export default function ColabPage() {
             </div>
             <div className={styles.jupyterContainer}>
                 <iframe
-                    src="https://jupyterlite.github.io/demo/lab/index.html"
+                    src="https://jupyterlite.github.io/demo/retro/notebooks/?kernel=python"
                     className={styles.jupyterFrame}
                     title="JupyterLite"
                     sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-modals"

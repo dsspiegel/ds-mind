@@ -24,35 +24,22 @@ gcloud services enable run.googleapis.com \
     bigquery.googleapis.com
 ```
 
-## Step 3: Deploy Backend
+## Step 3: Deploy All
+The project includes a `Makefile` to automate building and deploying. It handles:
+1. Building & Deploying Backend.
+2. Getting the live Backend URL.
+3. Building & Deploying Frontend (with the Backend URL baked in).
+
+Run this single command:
 ```bash
-# Set your project ID
-export PROJECT_ID=your-project-id
-gcloud config set project $PROJECT_ID
+# Ensure your API Key is loaded
+source .env
 
-# Deploy Backend
-gcloud run deploy ds-agent-backend \
-  --source . \
-  --dockerfile Dockerfile.backend \
-  --region us-central1 \
-  --allow-unauthenticated \
-  --set-env-vars GOOGLE_CLOUD_PROJECT=$PROJECT_ID,GOOGLE_API_KEY=your_gemini_api_key
+# Deploy everything
+make deploy-all
 ```
-*Note details: check the URL output.*
 
-## Step 4: Deploy Frontend
-1. Update `frontend/src/lib/api.ts` or environment variable to point to the **Backend URL** from Step 3.
-   - Ideally set `NEXT_PUBLIC_API_URL` during build time.
-
-```bash
-# Deploy Frontend
-gcloud run deploy ds-agent-frontend \
-  --source . \
-  --dockerfile Dockerfile.frontend \
-  --region us-central1 \
-  --allow-unauthenticated \
-  --set-env-vars NEXT_PUBLIC_API_URL=https://your-backend-url.run.app
-```
+*Note: The first run might take a few minutes as it builds containers.*
 
 ## Step 5: Access
 Open the **Frontend URL** provided by the command output.

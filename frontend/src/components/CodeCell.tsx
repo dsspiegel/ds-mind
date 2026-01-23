@@ -73,7 +73,7 @@ const CodeCell = ({ id, cellNumber, code, language = 'python', result, onChange,
                     <div className={styles.editorContainer}>
                         <Editor
                             height="120px"
-                            defaultValue={code}
+                            value={code}
                             defaultLanguage={language}
                             theme="vs-dark"
                             onChange={(val) => onChange(val || "")}

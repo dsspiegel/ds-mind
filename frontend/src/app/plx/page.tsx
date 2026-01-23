@@ -45,7 +45,7 @@ export default function PlxPage() {
                 const rows = data.sample_rows.map((r: any) => Object.values(r).join("\t"));
                 const tableText = [headers.join("\t"), ...rows].join("\n");
 
-                resultObj.stdout = `Query returned ${data.row_count} rows:\n\n${tableText}`;
+                resultObj.output = `Query returned ${data.row_count} rows:\n\n${tableText}`;
 
                 // Handle claims (either saved or ephemeral)
                 if (data.claim_generated) {

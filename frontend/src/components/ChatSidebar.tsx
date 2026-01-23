@@ -220,6 +220,11 @@ export default function ChatSidebar({ context }: ChatSidebarProps) {
                 claimsUsed: data.claims_used
             };
 
+            // Check for handoff (e.g. SQL generation)
+            if (data.handoff && data.handoff.type === 'sql') {
+                assistantMsg.content += `\n\n\`\`\`sql\n${data.handoff.sql}\n\`\`\``;
+            }
+
             setMessages(prev => [...prev, assistantMsg]);
         } catch (error) {
             setMessages(prev => [...prev, {

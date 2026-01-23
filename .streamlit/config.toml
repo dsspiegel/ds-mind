@@ -1,0 +1,5 @@
+[client]
+showErrorDetails = false
+
+[toolbar]
+headless = true

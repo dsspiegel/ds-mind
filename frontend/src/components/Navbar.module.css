@@ -1,0 +1,79 @@
+.navbar {
+    width: 100%;
+    background-color: var(--sidebar-bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    height: 64px;
+    gap: 2rem;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    color: var(--sidebar-text);
+    font-weight: 500;
+    transition: background-color 0.2s;
+    opacity: 0.8;
+    white-space: nowrap;
+}
+
+.link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    opacity: 1;
+}
+
+.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    opacity: 1;
+    color: var(--accent);
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.selectGroup {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #888;
+    font-weight: 600;
+}
+
+.select {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    background-color: var(--background);
+    color: var(--foreground);
+    border: 1px solid var(--border);
+    outline: none;
+    min-width: 140px;
+}

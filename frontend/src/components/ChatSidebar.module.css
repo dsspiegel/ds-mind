@@ -1,0 +1,502 @@
+.chatSidebar {
+    width: 320px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--sidebar-bg);
+    border-left: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.headerTop {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mindName {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.contextBadge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    background-color: rgba(255, 75, 75, 0.2);
+    color: var(--accent);
+    font-weight: 400;
+    margin-left: auto;
+}
+
+/* Selectors */
+.selectors {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem;
+}
+
+.selectorGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    flex: 1;
+}
+
+.selectorLabel {
+    font-size: 0.7rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdownButton {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background-color: #262730;
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+}
+
+.dropdownButton:hover {
+    border-color: #444;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
+    background-color: #262730;
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    z-index: 100;
+    overflow: hidden;
+}
+
+.dropdownItem {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: left;
+}
+
+.dropdownItem:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdownItemRow {
+    display: flex;
+    align-items: center;
+}
+
+.dropdownDelete {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.dropdownDelete:hover {
+    color: #ff4b4b;
+}
+
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.emptyState {
+    color: #666;
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.message {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.messageUser {
+    flex-direction: row-reverse;
+}
+
+.avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.avatarUser {
+    background-color: var(--accent);
+}
+
+.avatarBot {
+    background-color: #262730;
+}
+
+.bubble {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    max-width: 85%;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.bubbleUser {
+    background-color: transparent;
+    text-align: right;
+}
+
+.bubbleBot {
+    background-color: #262730;
+}
+
+.bubbleBot pre {
+    overflow-x: auto;
+    background: #1e1e1e;
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+    font-size: 0.8rem;
+}
+
+.bubbleBot code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1px 4px;
+    border-radius: 2px;
+    font-size: 0.8rem;
+}
+
+.thinking {
+    color: #888;
+    font-style: italic;
+}
+
+.inputArea {
+    padding: 0.75rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 0.5rem;
+}
+
+.input {
+    flex: 1;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    background-color: #1e1e1e;
+    color: white;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.input:focus {
+    border-color: var(--accent);
+}
+
+.sendButton {
+    background: transparent;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sendButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.sources {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.sourcesHeader {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+/* Create Mind Modal */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.createModal {
+    background: #262730;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    width: 450px;
+    border: 1px solid #444;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.createModal h3 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.mindTypeSelector {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #444;
+}
+
+.radioLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ccc;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.radioLabel input {
+    cursor: pointer;
+}
+
+.contextSection {
+    animation: fadeIn 0.3s ease;
+}
+
+.inputGroup {
+    margin-bottom: 1rem;
+}
+
+.inputGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #ddd;
+}
+
+.contextTextarea {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    border: 1px solid #444;
+    background: #1e1e1e;
+    color: white;
+    font-size: 0.85rem;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.modalInput {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #444;
+    background: #1e1e1e;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.distillSection {
+    background: #1e1e1e;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
+    border: 1px dashed #444;
+}
+
+.distillSection label {
+    font-size: 0.85rem;
+    color: #ccc;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.fileInputWrapper input {
+    font-size: 0.85rem;
+    color: #ccc;
+}
+
+.fileName {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #4b9fff;
+}
+
+.helperText {
+    font-size: 0.75rem;
+    color: #888;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+}
+
+.modalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.createBtn {
+    padding: 0.5rem 1rem;
+    background: #ff4b4b;
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.createBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.cancelBtn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    color: #ccc;
+    border: 1px solid #444;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.cancelBtn:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.dropdownDivider {
+    height: 1px;
+    background: #444;
+    margin: 0.25rem 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Auto Learn Controls */
+.autoLearnControl {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+}
+
+.autoLearnLabel {
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.toggleBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+/* Pending Claims Banner */
+.pendingBanner {
+    background: rgba(255, 165, 0, 0.1);
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    margin: 0 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.pendingInfo {
+    font-size: 0.8rem;
+    color: #ffaa00;
+    font-weight: 500;
+}
+
+.saveSessionBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem;
+    background: rgba(255, 165, 0, 0.2);
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    color: #ffaa00;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+}
+
+.saveSessionBtn:hover {
+    background: rgba(255, 165, 0, 0.3);
+}
+
+.createOption {
+    color: #4b9fff;
+    font-weight: 500;
+}

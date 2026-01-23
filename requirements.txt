@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+python-dotenv
+google-cloud-firestore
+google-cloud-bigquery
+google-genai
+pandas
+numpy
+streamlit
+streamlit-ace
+requests
+pydantic
+pypdf
+python-multipart

@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Markdown from 'react-markdown';
-import { Send, User, Bot, MessageSquare, ChevronDown, ToggleLeft, ToggleRight, Save, Copy, Edit2, X } from 'lucide-react';
+import { Send, User, Bot, MessageSquare, ChevronDown, ToggleLeft, ToggleRight, Save, Copy, Edit2, X, Code } from 'lucide-react';
 import styles from './ChatSidebar.module.css';
 import { useMind } from '../context/MindContext';
 import { apiFetch } from '../lib/api';
@@ -26,7 +26,7 @@ const MODELS = [
 ];
 
 export default function ChatSidebar({ context }: ChatSidebarProps) {
-    const { minds, currentMind, mindId, setMindId, deleteMind, autoLearn, setAutoLearn, pendingClaims, clearPendingClaims, refreshMinds } = useMind();
+    const { minds, currentMind, mindId, setMindId, deleteMind, autoLearn, setAutoLearn, pendingClaims, clearPendingClaims, refreshMinds, insertCode } = useMind();
 
     const [messages, setMessages] = useState<Message[]>(globalMessages);
     const [input, setInput] = useState("");
@@ -520,7 +520,38 @@ export default function ChatSidebar({ context }: ChatSidebarProps) {
                                 <>
                                     <Markdown
                                         components={{
-                                            pre: ({ node, ...props }) => <pre {...props} />,
+                                            pre: ({ node, children, ...props }) => {
+                                                // Extract code from the pre block for the insert button
+                                                const codeContent = String(children).replace(/\n$/, '');
+                                                return (
+                                                    <div style={{ position: 'relative' }}>
+                                                        <pre {...props}>{children}</pre>
+                                                        {context === 'colab' && codeContent.length > 10 && (
+                                                            <button
+                                                                onClick={() => insertCode(codeContent)}
+                                                                style={{
+                                                                    position: 'absolute',
+                                                                    top: '4px',
+                                                                    right: '4px',
+                                                                    padding: '4px 8px',
+                                                                    fontSize: '11px',
+                                                                    background: '#4b9fff',
+                                                                    color: 'white',
+                                                                    border: 'none',
+                                                                    borderRadius: '4px',
+                                                                    cursor: 'pointer',
+                                                                    display: 'flex',
+                                                                    alignItems: 'center',
+                                                                    gap: '4px'
+                                                                }}
+                                                                title="Insert into notebook"
+                                                            >
+                                                                <Code size={12} /> Insert
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                );
+                                            },
                                             code: ({ node, ...props }) => <code {...props} />
                                         }}
                                     >

@@ -28,6 +28,9 @@ interface MindContextType {
     addPendingClaims: (claims: Claim[]) => void;
     clearPendingClaims: () => void;
     refreshMinds: () => Promise<void>;
+    // Code insertion callback - set by ColabPage, called by ChatSidebar
+    insertCode: (code: string) => void;
+    setInsertCodeCallback: (fn: (code: string) => void) => void;
 }
 
 const MindContext = createContext<MindContextType | undefined>(undefined);
@@ -37,6 +40,10 @@ export function MindProvider({ children }: { children: ReactNode }) {
     const [mindId, setMindIdState] = useState("default_mind");
     const [autoLearn, setAutoLearn] = useState(true);
     const [pendingClaims, setPendingClaims] = useState<Claim[]>([]);
+    const [insertCodeCallback, setInsertCodeCallbackState] = useState<(code: string) => void>(() => () => { });
+
+    const insertCode = (code: string) => insertCodeCallback(code);
+    const setInsertCodeCallback = (fn: (code: string) => void) => setInsertCodeCallbackState(() => fn);
 
     // Determine current mind object
     const currentMind = minds.find(m => m.id === mindId) || minds[0] || null;
@@ -114,7 +121,9 @@ export function MindProvider({ children }: { children: ReactNode }) {
             pendingClaims,
             addPendingClaims,
             clearPendingClaims,
-            refreshMinds
+            refreshMinds,
+            insertCode,
+            setInsertCodeCallback
         }}>
             {children}
         </MindContext.Provider>

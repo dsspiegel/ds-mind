@@ -16,7 +16,7 @@ interface Cell {
 }
 
 export default function ColabPage() {
-    const { mindId, autoLearn, addPendingClaims } = useMind();
+    const { mindId, autoLearn, addPendingClaims, setInsertCodeCallback } = useMind();
     const [cells, setCells] = useState<Cell[]>([]);
     const [sessionId, setSessionId] = useState<string>("");
     const [executionCounter, setExecutionCounter] = useState(0);
@@ -25,6 +25,14 @@ export default function ColabPage() {
         setSessionId(`sess_${uuidv4().substring(0, 8)}`);
         setCells([{ id: uuidv4(), code: "# Write Python code here\n", result: null, isRunning: false, executionCount: null }]);
     }, []);
+
+    // Register the addCell function with the context so ChatSidebar can use it
+    useEffect(() => {
+        setInsertCodeCallback((code: string) => {
+            const newCell: Cell = { id: uuidv4(), code, result: null, isRunning: false, executionCount: null };
+            setCells(prev => [...prev, newCell]);
+        });
+    }, [setInsertCodeCallback]);
 
     const cellsRef = useRef(cells);
     const executionCounterRef = useRef(executionCounter);

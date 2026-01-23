@@ -545,8 +545,8 @@ export default function ChatSidebar({ context }: ChatSidebarProps) {
                                                                 onClick={() => insertCode(codeContent)}
                                                                 style={{
                                                                     position: 'absolute',
-                                                                    top: '-20px',
-                                                                    right: '0px',
+                                                                    top: '6px',
+                                                                    right: '6px',
                                                                     padding: '4px 8px',
                                                                     fontSize: '11px',
                                                                     background: '#4b9fff',

@@ -540,7 +540,7 @@ export default function ChatSidebar({ context }: ChatSidebarProps) {
                                                         <code className={className} {...props}>
                                                             {children}
                                                         </code>
-                                                        {context === 'colab' && (
+                                                        {(context === 'colab' || context === 'plx') && (
                                                             <button
                                                                 onClick={() => insertCode(codeContent)}
                                                                 style={{

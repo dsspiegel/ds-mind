@@ -7,7 +7,7 @@ import { useMind } from "../../context/MindContext";
 import { apiFetch } from "../../lib/api";
 
 export default function PlxPage() {
-    const { mindId, autoLearn, addPendingClaims } = useMind();
+    const { mindId, autoLearn, addPendingClaims, setInsertCodeCallback } = useMind();
     const [session, setSession] = useState<{ id: string, code: string, result: any, isRunning: boolean } | null>(null);
 
     useEffect(() => {
@@ -19,6 +19,13 @@ export default function PlxPage() {
             isRunning: false
         });
     }, []);
+
+    // Register insertion callback to REPLACE the current query
+    useEffect(() => {
+        setInsertCodeCallback((code: string) => {
+            setSession(prev => prev ? { ...prev, code: code } : null);
+        });
+    }, [setInsertCodeCallback]);
 
     const handleRun = async () => {
         if (!session) return;

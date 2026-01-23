@@ -36,7 +36,8 @@ def load_session_state(session_id: str) -> Dict[str, Any]:
             ns.update(INJECTED_OBJECTS)
             SESSION_CACHE[session_id] = ns.copy()
             return ns
-        except: pass
+        except (pickle.UnpicklingError, Exception) as e:
+            print(f"Failed to restore session {session_id}: {e}")
     
     return {'__builtins__': __builtins__, **INJECTED_OBJECTS}
 
@@ -164,15 +165,9 @@ def execute_cell(session_id, cell_id, code, cell_order, mind_id, auto_learn=True
             }, merge=True)
             result['claim_generated'] = claim
         else:
-            # Ephemeral claim
+            # Ephemeral mode: return claim for display but don't persist
             result['generated_claims'] = [claim]
-            # We don't set claim_generated property to avoid frontend confusion regarding "saved" status
-            # Actually, frontend logic might expect claim_generated for display.
-            # But frontend handles generated_claims for pending.
-            # Let's set claim_generated for immediate feedback in the cell, but confusing...
-            # The prompt says: "When Auto-learn is OFF: ... Claims are held in session state only"
-            # So we should return it but not save it.
-            result['claim_generated'] = claim # For display in cell
+            result['claim_generated'] = claim  # For UI feedback in cell
     
     # Update cells and save
     doc = db.collection('sessions').document(session_id).get()

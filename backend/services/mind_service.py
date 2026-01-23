@@ -83,7 +83,8 @@ Reference specific analysis (e.g., "Based on the notebook analysis...") and cite
             contents=prompt
         )
         answer = response.text.strip()
-    except:
+    except Exception as e:
+        print(f"Gemini API error in chat: {e}")
         answer = f"Based on my knowledge:\n" + "\n".join([f"• {c.get('content')}" for c in claims[:3]])
     
     return ChatResponse(answer=answer, claims_used=claims)
@@ -169,8 +170,8 @@ def distill_source(file_content: bytes = None, filename: str = "", text_content:
                          'confidence': 0.9,
                          'source': f"distill:{filename}"
                     })
-    except:
-        pass
+    except json.JSONDecodeError as e:
+        print(f"Failed to parse structured JSON from distillation: {e}")
 
     return {
         'filename': filename,

@@ -9,11 +9,14 @@ const getFallbackBaseUrl = () => {
     if (typeof window === "undefined") {
         return DEFAULT_LOCAL_API_URL;
     }
-    const { protocol, hostname } = window.location;
+    // Only use localhost fallback when actually on localhost
+    const { hostname } = window.location;
     if (isLocalhost(hostname)) {
         return DEFAULT_LOCAL_API_URL;
     }
-    return `${protocol}//${hostname}:8000`;
+    // In production, don't guess - require NEXT_PUBLIC_API_URL to be set
+    console.warn("API URL not configured for production. Set NEXT_PUBLIC_API_URL.");
+    return "";
 };
 
 const envBaseUrl = process.env.NEXT_PUBLIC_API_URL
@@ -22,15 +25,14 @@ const envBaseUrl = process.env.NEXT_PUBLIC_API_URL
 
 export async function apiFetch(path: string, init?: RequestInit) {
     const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-    const primaryUrl = `${envBaseUrl}${normalizedPath}`;
 
-    try {
-        return await fetch(primaryUrl, init);
-    } catch (error) {
-        if (!envBaseUrl && typeof window !== "undefined") {
-            const fallbackUrl = `${getFallbackBaseUrl()}${normalizedPath}`;
-            return await fetch(fallbackUrl, init);
-        }
-        throw error;
+    // Use env URL if set, otherwise fallback for localhost development
+    const baseUrl = envBaseUrl || getFallbackBaseUrl();
+    if (!baseUrl) {
+        throw new Error("API URL not configured. Set NEXT_PUBLIC_API_URL environment variable.");
     }
+
+    const url = `${baseUrl}${normalizedPath}`;
+    return await fetch(url, init);
 }
+

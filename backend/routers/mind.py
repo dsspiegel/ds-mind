@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, File, UploadFile, Form
 from typing import List, Optional
-from models import Mind, ChatRequest, ChatResponse
+from models import Mind, Claim, ChatRequest, ChatResponse
 from services.mind_service import chat, teach, db
 from google.cloud import firestore
 from google import genai

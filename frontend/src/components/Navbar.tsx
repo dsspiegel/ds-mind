@@ -30,7 +30,7 @@ const Navbar = () => {
                     className={`${styles.link} ${isActive('/plx') ? styles.active : ''}`}
                 >
                     <Database size={18} />
-                    "Plx"
+                    Plx (SQL)
                 </Link>
                 <Link
                     href="/about"

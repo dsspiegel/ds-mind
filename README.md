@@ -2,6 +2,10 @@
 
 Your DS Agent is a web-based, multi-language (Python and SQL) data science notebook environment with a unique, AI-powered knowledge persistence system called 'Minds'.
 
+## Application URL
+
+You can access the deployed application here: [https://your-ds-agent.web.app](https://your-ds-agent.web.app)
+
 ## Key Features
 
 *   **Interactive Notebook:** Execute Python and SQL code in a familiar notebook-style interface.

@@ -1,10 +1,19 @@
 {
   "hosting": {
-    "public": "frontend",
+    "public": "frontend/public",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "ds-agent-frontend",
+          "region": "us-central1"
+        }
+      }
     ]
   }
 }

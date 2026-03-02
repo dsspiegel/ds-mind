@@ -54,5 +54,9 @@ deploy-frontend:
 		--allow-unauthenticated \
 		--set-env-vars NEXT_PUBLIC_API_URL=$(BACKEND_URL)
 
-deploy-all: deploy-backend deploy-frontend
+deploy-firebase:
+	@echo "🌍 Configuring Firebase Hosting (Pretty URL)..."
+	firebase deploy --only hosting --project $(PROJECT_ID)
+
+deploy-all: deploy-backend deploy-frontend deploy-firebase
 	@echo "🎉 Deployment Complete!"

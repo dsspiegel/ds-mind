@@ -13,6 +13,6 @@ COPY backend/ ./backend
 # Current layout: /app/backend exists. /app/requirements.txt exists.
 # Main is in backend/main.py.
 # If we run from /app, we need uvicorn backend.main:app
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/app:/app/backend
 ENV PORT=8080
 CMD uvicorn backend.main:app --host 0.0.0.0 --port ${PORT}
